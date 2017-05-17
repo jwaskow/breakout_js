@@ -9,16 +9,26 @@ $(document).ready(function() {
 const canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
-ctx.beginPath();
-ctx.rect(20, 40, 50, 50);
-ctx.fillStyle = "#FF0000";
-ctx.fill();
-ctx.closePath();
+let x = canvas.width/2;
+let y = canvas.height-30;
 
-ctx.beginPath();
-ctx.arc(240, 160, 20, 0, Math.PI*2, false);
-ctx.fillStyle = "green";
-ctx.stroke();
-ctx.closePath();
+let dx = 2;
+let dy = -2;
+
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(x, y, 10, 0, Math.PI*2);
+  ctx.fillStyle = "#9957db";
+  ctx.fill();
+  ctx.closePath();
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBall();
+  x += dx;
+  y += dy;
+}
+setInterval(draw, 10);
 
 });
