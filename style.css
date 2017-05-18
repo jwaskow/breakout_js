@@ -3,3 +3,29 @@ canvas {
   display: block;
   margin: 0 auto;
 }
+
+#message {
+  font-size: 40px;
+  text-align: center;
+  font-family: 'Montserrat Subrayada', sans-serif;
+}
+
+#btn-container {
+  text-align: center;
+}
+
+#restart {
+  border: 3px solid #bbbdc1;
+  color: #fff;
+  font-size: 18px;
+  height: 50px;
+  width: 150px;
+  text-transform: uppercase;
+  box-shadow: 0 5px #9fa0a3;
+}
+
+#restart:active {
+
+  box-shadow: 0 2px #9fa0a3;
+  transform: translateY(3px);
+}

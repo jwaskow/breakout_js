@@ -1,10 +1,9 @@
 "use strict";
 
 $(document).ready(function() {
-    $("#test-btn").on('click', function() {
-      $("#test").html("Hello, World!");
-    })
 
+$("#restart").hide();
+$("#message").text('');
 
 const canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
@@ -48,8 +47,16 @@ function draw () {
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+    $("#message").text("Game Over");
+    $("#restart").show();
+    return;
+    }
   }
   if (rightPressed && paddleX < canvas.width - paddleWidth) {
     paddleX += 3;
@@ -80,5 +87,12 @@ function keyUpHandler (e) {
 }
 
 setInterval(draw, 1);
+
+const restart = function (e) {
+  e.preventDefault();
+  location.reload();
+}
+
+$("#restart").on('click', restart);
 
 });
