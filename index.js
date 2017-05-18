@@ -24,6 +24,42 @@ let paddleX = ((canvas.width-paddleWidth)/2);
 let rightPressed = false;
 var leftPressed = false;
 
+// brick variables
+let brickRowCount = 4;
+let brickColumnCount = 6;
+let brickWidth = 75;
+let brickHeight = 25;
+let brickPadding = 13;
+let brickOffsetTop = 30;
+let brickOffsetLeft = (canvas.width/6);
+
+var bricks = [];
+for (let c = 0; c<brickColumnCount; c++) {
+  bricks[c] = [];
+  for (let r = 0; r<brickRowCount; r++) {
+    bricks[c][r] = { x: 0, y: 0 };
+  }
+}
+
+$(document).keydown(keyDownHandler);
+$(document).keyup(keyUpHandler);
+
+function keyDownHandler (e) {
+  if (e.keyCode === 39) {
+    rightPressed = true;
+  } else if (e.keyCode === 37) {
+    leftPressed = true;
+  }
+}
+
+function keyUpHandler (e) {
+  if (e.keyCode === 39) {
+    rightPressed = false;
+  } else if (e.keyCode === 37) {
+    leftPressed = false;
+  }
+}
+
 function drawBall () {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -40,8 +76,25 @@ function drawPaddle () {
   ctx.closePath();
 }
 
+function drawBricks () {
+  for (let c = 0; c<brickColumnCount; c++) {
+    for (let r = 0; r<brickRowCount; r++) {
+      let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+      let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+      bricks[c][r].x = brickX;
+      bricks[c][r].y = brickY;
+      ctx.beginPath();
+      ctx.rect(brickX, brickY, brickWidth, brickHeight);
+      ctx.fillStyle = "#5ec0ed";
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
+}
+
 function draw () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBricks();
   drawBall();
   drawPaddle();
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -65,25 +118,6 @@ function draw () {
   }
   x += dx;
   y += dy;
-}
-
-$(document).keydown(keyDownHandler);
-$(document).keyup(keyUpHandler);
-
-function keyDownHandler (e) {
-  if (e.keyCode === 39) {
-    rightPressed = true;
-  } else if (e.keyCode === 37) {
-    leftPressed = true;
-  }
-}
-
-function keyUpHandler (e) {
-  if (e.keyCode === 39) {
-    rightPressed = false;
-  } else if (e.keyCode === 37) {
-    leftPressed = false;
-  }
 }
 
 setInterval(draw, 1);
