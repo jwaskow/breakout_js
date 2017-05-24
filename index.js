@@ -33,11 +33,13 @@ let brickPadding = 13;
 let brickOffsetTop = 30;
 let brickOffsetLeft = (canvas.width/6);
 
-var bricks = [];
+let score = 0;
+
+let bricks = [];
 for (let c = 0; c<brickColumnCount; c++) {
   bricks[c] = [];
   for (let r = 0; r<brickRowCount; r++) {
-    bricks[c][r] = { x: 0, y: 0 };
+    bricks[c][r] = { x: 0, y: 0, status: 1 };
   }
 }
 
@@ -60,6 +62,26 @@ function keyUpHandler (e) {
   }
 }
 
+function collisionDetection () {
+  for (let c=0; c < brickColumnCount; c++) {
+    for (let r=0; r < brickRowCount; r++) {
+      let b = bricks[c][r];
+      if (b.status === 1) {
+        if (x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+          dy = -dy;
+          b.status = 0;
+        }
+      }
+    }
+  }
+}
+
+function drawScore () {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText("Score: " + score, 8, 20);
+}
+
 function drawBall () {
   ctx.beginPath();
   ctx.arc(x, y, ballRadius, 0, Math.PI*2);
@@ -76,18 +98,22 @@ function drawPaddle () {
   ctx.closePath();
 }
 
+// bricks are created in a nested array -- columns and rows.  The origin of the placed
+// brick moves the length and height of a brick + the padding after each placed brick.
 function drawBricks () {
   for (let c = 0; c<brickColumnCount; c++) {
     for (let r = 0; r<brickRowCount; r++) {
-      let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
-      let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
-      bricks[c][r].x = brickX;
-      bricks[c][r].y = brickY;
-      ctx.beginPath();
-      ctx.rect(brickX, brickY, brickWidth, brickHeight);
-      ctx.fillStyle = "#5ec0ed";
-      ctx.fill();
-      ctx.closePath();
+      if (bricks[c][r].status === 1) {
+        let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+        let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+        bricks[c][r].x = brickX;
+        bricks[c][r].y = brickY;
+        ctx.beginPath();
+        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+        ctx.fillStyle = "#5ec0ed";
+        ctx.fill();
+        ctx.closePath();
+      }
     }
   }
 }
@@ -97,9 +123,13 @@ function draw () {
   drawBricks();
   drawBall();
   drawPaddle();
+  collisionDetection();
+  // collision detection for left and right walls
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
+  // collision detection for top wall, and if the ball collides with the bottom
+  // wall, the game is over.
   if (y + dy < ballRadius) {
     dy = -dy;
   } else if (y + dy > canvas.height - ballRadius) {
@@ -112,9 +142,9 @@ function draw () {
     }
   }
   if (rightPressed && paddleX < canvas.width - paddleWidth) {
-    paddleX += 3;
+    paddleX += 2;
   } else if (leftPressed && paddleX > 0) {
-    paddleX -= 3;
+    paddleX -= 2;
   }
   x += dx;
   y += dy;
@@ -122,6 +152,7 @@ function draw () {
 
 setInterval(draw, 1);
 
+// reloads the page
 const restart = function (e) {
   e.preventDefault();
   location.reload();
