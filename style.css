@@ -1,5 +1,52 @@
+body {
+  background: rgb(190, 214, 212);
+}
+
 canvas {
-  background: #eee;
+  background: rgb(242, 225, 196);
   display: block;
   margin: 0 auto;
+  border: 25px solid white;
+}
+
+#message {
+  font-size: 40px;
+  text-align: center;
+  font-family: 'Montserrat Subrayada', sans-serif;
+  margin: 0 14% 0 0;
+}
+
+#btn-container {
+  text-align: center;
+  margin: 0 14% 0 0;
+}
+
+#restart {
+  border: 3px solid #bbbdc1;
+  color: #fff;
+  font-size: 18px;
+  height: 50px;
+  width: 150px;
+  text-transform: uppercase;
+  box-shadow: 0 5px #9fa0a3;
+}
+
+#restart:active {
+
+  box-shadow: 0 2px #9fa0a3;
+  transform: translateY(3px);
+}
+
+#score {
+  float: right;
+  padding: 15% 5% 0 0;
+  font-size: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+#scoreText {
+  float: right;
+  padding: 15% 5% 0 0;
+  font-size: 20px;
+  font-family: 'Arial', sans-serif;
 }
