@@ -13,10 +13,12 @@ canvas {
   font-size: 40px;
   text-align: center;
   font-family: 'Montserrat Subrayada', sans-serif;
+  margin: 0 14% 0 0;
 }
 
 #btn-container {
   text-align: center;
+  margin: 0 14% 0 0;
 }
 
 #restart {
@@ -33,4 +35,18 @@ canvas {
 
   box-shadow: 0 2px #9fa0a3;
   transform: translateY(3px);
+}
+
+#score {
+  float: right;
+  padding: 15% 5% 0 0;
+  font-size: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+#scoreText {
+  float: right;
+  padding: 15% 5% 0 0;
+  font-size: 20px;
+  font-family: 'Arial', sans-serif;
 }
