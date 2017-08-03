@@ -1,7 +1,12 @@
+body {
+  background: rgb(190, 214, 212);
+}
+
 canvas {
-  background: #efdcdc;
+  background: rgb(242, 225, 196);
   display: block;
   margin: 0 auto;
+  border: 25px solid white;
 }
 
 #message {

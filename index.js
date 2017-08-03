@@ -22,7 +22,7 @@ let paddleX = ((canvas.width-paddleWidth)/2);
 
 // user input variables
 let rightPressed = false;
-var leftPressed = false;
+let leftPressed = false;
 
 // brick variables
 let brickRowCount = 4;
